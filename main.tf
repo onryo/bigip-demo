@@ -83,13 +83,17 @@ resource "bigip_ltm_profile_http" "terraform_test_profile_http" {
 # SSL profile configuration
 
 resource "bigip_ltm_profile_client_ssl" "terraform_test_profile_client_ssl" {
-  name = "/Common/example.com"
-  cert = "/Common/example.com.crt"
-  key = "/Common/example.com.key"
-  partition = "Common"
+  name          = "/Common/example.com"
+  cert          = "/Common/example.com.crt"
+  key           = "/Common/example.com.key"
+  partition     = "Common"
   defaults_from = "/Common/clientssl"
-  authenticate = "always"
-  ciphers = "DEFAULT"
+  authenticate  = "always"
+  ciphers       = "DEFAULT"
+  depends_on = [
+    bigip_ssl_key.terraform_test_ssl_key,
+    bigip_ssl_certificate.terraform_test_ssl_certificate
+  ]
 }
 
 # SSL certificate configuration
