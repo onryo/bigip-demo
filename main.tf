@@ -51,7 +51,7 @@ resource "bigip_ltm_virtual_server" "terraform_test_vs_https" {
   pool                       = "/Common/terraform_test_pool_https"
   source_address_translation = "automap"
   depends_on = [
-    bigip_ltm_pool.terraform_test_pool_https
+    bigip_ltm_pool.terraform_test_pool_https,
     bigip_ltm_profile_client_ssl.terraform_test_profile_client_ssl
   ]
 }
@@ -115,7 +115,7 @@ resource "bigip_ssl_certificate" "terraform_test_ssl_certificate" {
 # SSL certificate generator
 
 resource "tls_private_key" "terraform_test_tls_private_key" {
-  algorithm   = "RSA"
+  algorithm = "RSA"
 }
 
 resource "tls_self_signed_cert" "terraform_test_tls_self_signed_cert" {
