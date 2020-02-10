@@ -43,7 +43,7 @@ resource "bigip_ltm_virtual_server" "https" {
   description = "Terraform Test HTTPS Virtual Server"
   port        = 443
   client_profiles = [
-    "/Common/clientssl"
+    "/Common/example.com"
   ]
   server_profiles = [
     "/Common/serverssl"
@@ -82,16 +82,26 @@ resource "bigip_ltm_profile_http" "terraform_test_profile_http" {
 
 # SSL profile configuration
 
+resource "bigip_ltm_profile_client_ssl" "terraform_test_profile_client_ssl" {
+  name = "/Common/example.com"
+  cert = "example.com.crt"
+  key = "example.com.key"
+  partition = "Common"
+  defaults_from = "/Common/clientssl"
+  authenticate = "always"
+  ciphers = "DEFAULT"
+}
+
 # SSL certificate configuration
 
 resource "bigip_ssl_key" "terraform_test_ssl_key" {
-  name      = "example.com"
+  name      = "example.com.key"
   content   = tls_private_key.terraform_test_tls_private_key.private_key_pem
   partition = "Common"
 }
 
 resource "bigip_ssl_certificate" "terraform_test_ssl_certificate" {
-  name      = "example.com"
+  name      = "example.com.crt"
   content   = tls_self_signed_cert.terraform_test_tls_self_signed_cert.cert_pem
   partition = "Common"
 }
