@@ -8,7 +8,7 @@ provider "bigip" {
 
 resource "bigip_ltm_virtual_server" "terraform_test_vs_http" {
   name        = "/Common/terraform_test_vs_http"
-  destination = "10.84.100.100"
+  destination = "10.0.0.100"
   description = "Terraform Test HTTP Virtual Server"
   ip_protocol = "tcp"
   port        = 80
@@ -39,7 +39,7 @@ resource "bigip_ltm_pool" "terraform_test_pool_http" {
 
 resource "bigip_ltm_virtual_server" "terraform_test_vs_https" {
   name        = "/Common/terraform_test_vs_https"
-  destination = "10.84.100.101"
+  destination = "10.0.0.101"
   description = "Terraform Test HTTPS Virtual Server"
   port        = 443
   client_profiles = [
