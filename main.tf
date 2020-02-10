@@ -11,9 +11,13 @@ resource "bigip_ltm_virtual_server" "terraform_test_vs_http" {
   destination                = "10.84.100.100"
   description                = "Terraform Test HTTP Virtual Server"
   port                       = 80
+  profiles = ["/Common/terraform_test_profile_http"]
   pool                       = "/Common/terraform_test_pool_http"
   source_address_translation = "automap"
-  depends_on                 = [bigip_ltm_pool.terraform_test_pool_http]
+  depends_on                 = [
+    bigip_ltm_pool.terraform_test_pool_http,
+    bigip_ltm_profile_http.terraform_test_profile_http
+    ]
 }
 
 resource "bigip_ltm_pool" "terraform_test_pool_http" {
@@ -46,4 +50,14 @@ resource "bigip_ltm_pool" "terraform_test_pool_https" {
   monitors            = ["/Common/https"]
   allow_snat          = "yes"
   allow_nat           = "yes"
+}
+
+# HTTP profile configuration
+
+resource "bigip_ltm_profile_http" "terraform_test_profile_http" {
+  name                  = "/Common/terraform_test_profile_http"
+  defaults_from         = "/Common/http"
+  description           = "Terraform Test HTTP Profile"
+  fallback_host         = "https://f5.com/"
+  fallback_status_codes = ["400", "500", "300"]
 }
