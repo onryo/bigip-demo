@@ -29,6 +29,10 @@ resource "bigip_ltm_pool" "terraform_test_pool_http" {
   ]
   allow_snat = "yes"
   allow_nat  = "yes"
+
+  depends_on = [
+    bigip_ltm_monitor.terraform_test_http_monitor
+  ]
 }
 
 # HTTP monitor configuration
