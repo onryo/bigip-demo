@@ -114,12 +114,11 @@ resource "bigip_ssl_certificate" "terraform_test_ssl_certificate" {
 # SSL certificate generator
 
 resource "tls_private_key" "terraform_test_tls_private_key" {
-  algorithm   = "ECDSA"
-  ecdsa_curve = "P384"
+  algorithm   = "RSA"
 }
 
 resource "tls_self_signed_cert" "terraform_test_tls_self_signed_cert" {
-  key_algorithm   = "ECDSA"
+  key_algorithm   = "RSA"
   private_key_pem = tls_private_key.terraform_test_tls_private_key.private_key_pem
 
   subject {
