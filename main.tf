@@ -29,7 +29,7 @@ resource "bigip_ltm_pool" "terraform_test_pool_http" {
   load_balancing_mode = "round-robin"
   description         = "Terraform Test HTTP Pool"
   monitors = [
-    "/Common/http"
+    "/Common/terraform_test_http_monitor"
   ]
   allow_snat = "yes"
   allow_nat  = "yes"
@@ -65,6 +65,16 @@ resource "bigip_ltm_pool" "terraform_test_pool_https" {
   ]
   allow_snat = "yes"
   allow_nat  = "yes"
+}
+
+# HTTP monitor configuration
+
+resource "bigip_ltm_monitor" "terraform_test_http_monitor" {
+  name        = "/Common/terraform_test_http_monitor"
+  parent      = "/Common/http"
+  send        = "GET /\r\n"
+  timeout     = "31"
+  interval    = "10"
 }
 
 # HTTP profile configuration
