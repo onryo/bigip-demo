@@ -37,7 +37,7 @@ resource "bigip_ltm_pool" "terraform_test_pool_http" {
 
 # HTTPS virtual server configuration
 
-resource "bigip_ltm_virtual_server" "https" {
+resource "bigip_ltm_virtual_server" "terraform_test_vs_https" {
   name        = "/Common/terraform_test_vs_https"
   destination = "10.84.100.101"
   description = "Terraform Test HTTPS Virtual Server"
@@ -84,8 +84,8 @@ resource "bigip_ltm_profile_http" "terraform_test_profile_http" {
 
 resource "bigip_ltm_profile_client_ssl" "terraform_test_profile_client_ssl" {
   name = "/Common/example.com"
-  cert = "example.com.crt"
-  key = "example.com.key"
+  cert = "/Common/example.com.crt"
+  key = "/Common/example.com.key"
   partition = "Common"
   defaults_from = "/Common/clientssl"
   authenticate = "always"
