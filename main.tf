@@ -11,9 +11,6 @@ resource "bigip_ltm_virtual_server" "terraform_test_vs_http" {
   destination = "10.84.100.100"
   description = "Terraform Test HTTP Virtual Server"
   port        = 80
-  profiles = [
-    "/Common/tcp"
-  ]
   pool                       = "/Common/terraform_test_pool_http"
   source_address_translation = "automap"
   depends_on = [
