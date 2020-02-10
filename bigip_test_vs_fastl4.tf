@@ -19,7 +19,7 @@ resource "bigip_ltm_pool" "terraform_test_pool_fastl4" {
   load_balancing_mode = "round-robin"
   description         = "Terraform Test FastL4 Pool"
   monitors = [
-    "/Common/icmp"
+    "/Common/tcp_half_open"
   ]
   allow_snat = "yes"
   allow_nat  = "yes"
