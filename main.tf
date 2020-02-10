@@ -52,6 +52,7 @@ resource "bigip_ltm_virtual_server" "terraform_test_vs_https" {
   source_address_translation = "automap"
   depends_on = [
     bigip_ltm_pool.terraform_test_pool_https
+    bigip_ltm_profile_client_ssl.terraform_test_profile_client_ssl
   ]
 }
 
