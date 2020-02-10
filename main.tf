@@ -86,6 +86,7 @@ resource "bigip_ltm_profile_client_ssl" "terraform_test_profile_client_ssl" {
   name          = "/Common/example.com"
   cert          = "/Common/example.com.crt"
   key           = "/Common/example.com.key"
+  chain         = "none"
   partition     = "Common"
   defaults_from = "/Common/clientssl"
   authenticate  = "always"
