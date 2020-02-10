@@ -11,13 +11,13 @@ resource "bigip_ltm_virtual_server" "terraform_test_vs_http" {
   destination                = "10.84.100.100"
   description                = "Terraform Test HTTP Virtual Server"
   port                       = 80
-  profiles = ["/Common/terraform_test_profile_http"]
+  profiles                   = ["/Common/terraform_test_profile_http"]
   pool                       = "/Common/terraform_test_pool_http"
   source_address_translation = "automap"
-  depends_on                 = [
+  depends_on = [
     bigip_ltm_pool.terraform_test_pool_http,
     bigip_ltm_profile_http.terraform_test_profile_http
-    ]
+  ]
 }
 
 resource "bigip_ltm_pool" "terraform_test_pool_http" {
@@ -60,4 +60,45 @@ resource "bigip_ltm_profile_http" "terraform_test_profile_http" {
   description           = "Terraform Test HTTP Profile"
   fallback_host         = "https://f5.com/"
   fallback_status_codes = ["400", "500", "300"]
+}
+
+# SSL profile configuration
+
+# SSL certificate configuration
+
+resource "bigip_ssl_key" "terraform_test_ssl_key" {
+        name = "example.com"
+        content = tls_private_key.terraform_test_tls_private_key.private_key_pem
+        partition = "Common"
+}
+
+resource "bigip_ssl_certificate" "terraform_test_ssl_certificate" {
+        name = "example.com"
+        content = tls_self_signed_cert.terraform_test_tls_self_signed_cert.cert_pem
+        partition = "Common"
+}
+
+# SSL certificate generator
+
+resource "tls_private_key" "terraform_test_tls_private_key" {
+  algorithm   = "ECDSA"
+  ecdsa_curve = "P384"
+}
+
+resource "tls_self_signed_cert" "terraform_test_tls_self_signed_cert" {
+  key_algorithm   = "ECDSA"
+  private_key_pem = tls_private_key.terraform_test_tls_private_key.private_key_pem
+
+  subject {
+    common_name  = "example.com"
+    organization = "ACME Examples, Inc"
+  }
+
+  validity_period_hours = 24
+
+  allowed_uses = [
+    "key_encipherment",
+    "digital_signature",
+    "server_auth",
+  ]
 }
