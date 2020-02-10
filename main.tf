@@ -13,6 +13,7 @@ resource "bigip_ltm_virtual_server" "terraform_test_vs_http" {
   port                       = 80
   pool                       = "/Common/terraform_test_pool_http"
   source_address_translation = "automap"
+  depends_on                 = [bigip_ltm_pool.terraform_test_pool_http]
 }
 
 resource "bigip_ltm_pool" "terraform_test_pool_http" {
@@ -35,6 +36,7 @@ resource "bigip_ltm_virtual_server" "https" {
   server_profiles            = ["/Common/serverssl"]
   pool                       = "/Common/terraform_test_pool_https"
   source_address_translation = "automap"
+  depends_on                 = [bigip_ltm_pool.terraform_test_pool_https]
 }
 
 resource "bigip_ltm_pool" "terraform_test_pool_https" {
