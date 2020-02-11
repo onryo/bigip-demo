@@ -24,3 +24,13 @@ resource "bigip_ltm_pool" "terraform_test_pool_fastl4" {
   allow_snat = "yes"
   allow_nat  = "yes"
 }
+
+# FastL4 node/pool attachment
+
+resource "bigip_ltm_pool_attachment" "terraform_test_node_attach_fastl4" {
+  pool = bigip_ltm_pool.terraform_test_pool_fastl4.name
+  node = "${bigip_ltm_node.terraform_test_node.name}:80"
+  depends_on = [
+    bigip_ltm_node.terraform_test_node
+  ]
+}

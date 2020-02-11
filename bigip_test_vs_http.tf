@@ -37,7 +37,7 @@ resource "bigip_ltm_pool" "terraform_test_pool_http" {
 
 # HTTP node/pool attachment
 
-resource "bigip_ltm_pool_attachment" "terraform_test_node_attach" {
+resource "bigip_ltm_pool_attachment" "terraform_test_node_attach_http" {
   pool = bigip_ltm_pool.terraform_test_pool_http.name
   node = "${bigip_ltm_node.terraform_test_node.name}:80"
   depends_on = [

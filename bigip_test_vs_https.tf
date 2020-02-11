@@ -32,6 +32,16 @@ resource "bigip_ltm_pool" "terraform_test_pool_https" {
   allow_nat  = "yes"
 }
 
+# HTTPS node/pool attachment
+
+resource "bigip_ltm_pool_attachment" "terraform_test_node_attach_https" {
+  pool = bigip_ltm_pool.terraform_test_pool_https.name
+  node = "${bigip_ltm_node.terraform_test_node.name}:443"
+  depends_on = [
+    bigip_ltm_node.terraform_test_node
+  ]
+}
+
 # SSL profile configuration
 
 resource "bigip_ltm_profile_client_ssl" "terraform_test_profile_client_ssl" {
