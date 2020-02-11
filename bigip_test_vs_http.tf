@@ -20,11 +20,9 @@ resource "bigip_ltm_pool" "terraform_test_pool_http" {
   name                = "/Common/terraform_test_pool_http"
   load_balancing_mode = "round-robin"
   description         = "Terraform Test HTTP Pool"
-  monitors = [
-    bigip_ltm_monitor.terraform_test_http_monitor.name
-  ]
-  allow_snat = "yes"
-  allow_nat  = "yes"
+  monitors            = [bigip_ltm_monitor.terraform_test_http_monitor.name]
+  allow_snat          = "yes"
+  allow_nat           = "yes"
 }
 
 # HTTP node/pool attachment
