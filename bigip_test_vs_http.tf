@@ -51,8 +51,8 @@ resource "bigip_ltm_monitor" "terraform_test_http_monitor" {
   name     = "/Common/terraform_test_http_monitor"
   parent   = "/Common/http"
   send     = "GET /\r\n"
-  timeout  = "31"
-  interval = "10"
+  timeout  = "361"
+  interval = "120"
 }
 
 # HTTP profile configuration
