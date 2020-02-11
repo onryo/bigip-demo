@@ -35,6 +35,16 @@ resource "bigip_ltm_pool" "terraform_test_pool_http" {
   ]
 }
 
+# HTTP node/pool attachment
+
+resource "bigip_ltm_pool_attachment" "terraform_test_node_attach" {
+  pool = bigip_ltm_pool.terraform_test_pool_http.name
+  node = "${bigip_ltm_node.terraform_test_node.name}:80"
+  depends_on = [
+    bigip_ltm_node.terraform_test_node
+  ]
+}
+
 # HTTP monitor configuration
 
 resource "bigip_ltm_monitor" "terraform_test_http_monitor" {
