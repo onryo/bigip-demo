@@ -1,3 +1,12 @@
+terraform {
+  required_providers {
+    bigip = {
+      source = "F5Networks/bigip"
+      version = "1.7.0"
+    }
+  }
+}
+
 provider "bigip" {
   address  = var.bigip_url
   username = var.bigip_username
