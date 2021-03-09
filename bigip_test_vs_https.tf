@@ -45,13 +45,13 @@ resource "bigip_ltm_profile_client_ssl" "terraform_test_profile_client_ssl" {
 # SSL certificate configuration
 
 resource "bigip_ssl_key" "terraform_test_ssl_key" {
-  name      = "example.com.key"
+  name      = "/Common/example.com.key"
   content   = tls_private_key.terraform_test_tls_private_key.private_key_pem
   partition = "Common"
 }
 
 resource "bigip_ssl_certificate" "terraform_test_ssl_certificate" {
-  name      = "example.com.crt"
+  name      = "/Common/example.com.crt"
   content   = tls_self_signed_cert.terraform_test_tls_self_signed_cert.cert_pem
   partition = "Common"
 }
